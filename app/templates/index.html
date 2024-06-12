@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Diabetes Prediction</title>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white text-center">
+                <h1 class="card-title">🩺 Diabetes Prediction</h1>
+            </div>
+            <div class="card-body">
+                <form action="/predict" method="POST" class="prediction-form">
+                    <div class="form-section">
+                        <h4 class="section-title bg-light p-2 rounded">Demographic Details</h4>
+                        <div class="row">
+                            {% for feature in demographic_features %}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ feature }}">{{ feature.replace('_', ' ').title() }}:</label>
+                                    <input type="text" id="{{ feature }}" name="{{ feature }}" class="form-control" required>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4 class="section-title bg-light p-2 rounded">Medical History</h4>
+                        <div class="row">
+                            {% for feature in medical_history_features %}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ feature }}">{{ feature.replace('_', ' ').title() }}:</label>
+                                    <input type="text" id="{{ feature }}" name="{{ feature }}" class="form-control" required>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4 class="section-title bg-light p-2 rounded">Lifestyle Factors</h4>
+                        <div class="row">
+                            {% for feature in lifestyle_features %}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ feature }}">{{ feature.replace('_', ' ').title() }}:</label>
+                                    <input type="text" id="{{ feature }}" name="{{ feature }}" class="form-control" required>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Predict</button>
+                </form>
+
+                {% if prediction is not none %}
+                <div class="result mt-4">
+                    <div class="alert alert-success text-center">
+                        <h2>Prediction: {{ prediction }}</h2>
+                        <h3>Probability: {{ probability }}</h3>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
